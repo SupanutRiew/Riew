@@ -209,6 +209,7 @@ class Ui_Calculator(object):
         QtCore.QMetaObject.connectSlotsByName(Calculator)
 
     def dot(self):
+        #this is to prevent double dot  in a value
         screen = self.output_2.text()
         if "." in screen:
             pass
@@ -216,6 +217,7 @@ class Ui_Calculator(object):
             self.output_2.setText(f'{screen}.')
 
     def press(self, pressed):
+        #number before pressing function or equal
         if self.output_2.text() == "0":
             self.output_2.setText(pressed)
 
@@ -223,10 +225,12 @@ class Ui_Calculator(object):
             self.output_2.setText(f'{self.output_2.text()}{pressed}')
 
     def resets(self):
+        # C
         self.output.setText("0")
         self.output_2.setText("0")
 
     def function(self,pressed):
+        #number goes to output1 then output2 becomes 0, waiting for more inputs
         if self.output.text() == "0":
             self.output.setText(f'{self.output_2.text()}{pressed}')
             self.output_2.setText('0')
@@ -235,20 +239,47 @@ class Ui_Calculator(object):
             self.output_2.setText('0')
 
     def math(self):
-        #fix the double shit
-        self.output.setText(f'{self.output.text()}{self.output_2.text()}')
-        screen = self.output.text()
+        #prevent stupid people from pressing number then equal without any + - * /
+        if self.output.text() == "0":
+            screen = self.output_2.text()
+        else:
+            self.output.setText(f'{self.output.text()}{self.output_2.text()}')
+            screen = self.output.text()
         try:
             answer = eval(screen)
-            self.output_2.setText(str(answer))
-            self.output.setText("0")
+            if len(str(answer)) <= 13:
+                self.output_2.setText(str(answer))
+                self.output.setText("0")
+            else:
+                #This is to change output if it exceeds the given area of box
+                count = 13
+                textanswer = str(answer)
+                numanswer = answer
+                #one where the output is float
+                if "." in textanswer:
+                    while len(textanswer) > 13 and count > 0:
+                        numanswer = round(numanswer, count)
+                        textanswer = str(numanswer)
+                        count -= 1
+                    self.output_2.setText(textanswer)
+                    self.output.setText("0")
+                    #another one where if already round the float but still exceeds the given space
+                    if len(textanswer) > 13:
+                        finalanswer = textanswer[0]+"*10^"+str(len(textanswer)-3)
+                        self.output_2.setText(finalanswer)
+                #one where the output is integer
+                else:
+                    jumnuan = len(textanswer)
+                    finalanswer = textanswer[0]+"*10^"+str(jumnuan-1)
+                    self.output_2.setText(str(finalanswer))
+                    self.output.setText("0")
         except:
             self.output_2.setText("Error")
             self.output.setText("0")
-            time.sleep(3)
-            self.output_2.setText("0")
+
 
     def wtfisce(self):
+        #reset only the output2 value
         self.output_2.setText("0")
 
     def retranslateUi(self, Calculator):
