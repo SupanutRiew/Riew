@@ -264,12 +264,12 @@ class Ui_Calculator(object):
                     self.output.setText("0")
                     #another one where if already round the float but still exceeds the given space
                     if len(textanswer) > 13:
-                        finalanswer = textanswer[0]+"*10**"+str(len(textanswer)-3)
+                        finalanswer = textanswer[0]+"."+textanswer[1]+"*10**"+str(len(textanswer)-3)
                         self.output_2.setText(finalanswer)
                 #one where the output is integer
                 else:
                     jumnuan = len(textanswer)
-                    finalanswer = textanswer[0]+"*10**"+str(jumnuan-1)
+                    finalanswer = textanswer[0]+"."+textanswer[1]+"*10**"+str(jumnuan-1)
                     self.output_2.setText(str(finalanswer))
                     self.output.setText("0")
         except:
