@@ -44,6 +44,7 @@ class Ui_Calculator(object):
         self.output.setGeometry(QtCore.QRect(10, 10, 291, 41))
         font = QtGui.QFont()
         font.setPointSize(16)
+        
         self.output.setFont(font)
         self.output.setFrameShape(QtWidgets.QFrame.Box)
         self.output.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -60,6 +61,7 @@ class Ui_Calculator(object):
         font.setPointSize(-1)
         self.pushButton7.setFont(font)
         self.pushButton7.setObjectName("pushButton7")
+        
         self.pushButton8 = QtWidgets.QPushButton(Calculator, clicked= lambda: self.press("8"))
         self.pushButton8.setGeometry(QtCore.QRect(80, 170, 61, 71))
         font = QtGui.QFont()
@@ -67,6 +69,7 @@ class Ui_Calculator(object):
         font.setPointSize(-1)
         self.pushButton8.setFont(font)
         self.pushButton8.setObjectName("pushButton8")
+        
         self.pushButton9 = QtWidgets.QPushButton(Calculator, clicked= lambda: self.press("9"))
         self.pushButton9.setGeometry(QtCore.QRect(150, 170, 61, 71))
         font = QtGui.QFont()
@@ -74,6 +77,7 @@ class Ui_Calculator(object):
         font.setPointSize(-1)
         self.pushButton9.setFont(font)
         self.pushButton9.setObjectName("pushButton9")
+        
         self.pushButtondivide = QtWidgets.QPushButton(Calculator, clicked= lambda: self.function("/"))
         self.pushButtondivide.setGeometry(QtCore.QRect(240, 170, 61, 71))
         font = QtGui.QFont()
@@ -82,6 +86,7 @@ class Ui_Calculator(object):
         self.pushButtondivide.setFont(font)
         self.pushButtondivide.setObjectName("pushButtondivide")
         self.pushButtondivide.setStyleSheet("color: white;")
+        
         self.pushButton4 = QtWidgets.QPushButton(Calculator, clicked= lambda: self.press("4"))
         self.pushButton4.setGeometry(QtCore.QRect(10, 250, 61, 71))
         font = QtGui.QFont()
@@ -216,12 +221,16 @@ class Ui_Calculator(object):
             self.output_2.setText(f'{screen}.')
 
     def press(self, pressed):
+        #try adding limits to number
+        screem = self.output_2.text()
+        screem = str(screem)
+        if len(screem) <= 12:
         #number before pressing function or equal
-        if self.output_2.text() == "0":
-            self.output_2.setText(pressed)
+            if self.output_2.text() == "0":
+                self.output_2.setText(pressed)
 
-        else:
-            self.output_2.setText(f'{self.output_2.text()}{pressed}')
+            else:
+                self.output_2.setText(f'{self.output_2.text()}{pressed}')
 
     def resets(self):
         # C
