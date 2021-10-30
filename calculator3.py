@@ -226,7 +226,7 @@ class Ui_Calculator(object):
         screem = str(screem)
         if len(screem) <= 12:
         #number before pressing function or equal
-            if self.output_2.text() == "0":
+            if self.output_2.text() == "":
                 self.output_2.setText(pressed)
 
             else:
@@ -235,16 +235,28 @@ class Ui_Calculator(object):
     def resets(self):
         # C
         self.output.setText("0")
-        self.output_2.setText("0")
+        self.output_2.setText("")
 
     def function(self,pressed):
-        #number goes to output1 then output2 becomes 0, waiting for more inputs
-        if self.output.text() == "0":
-            self.output.setText(f'{self.output_2.text()}{pressed}')
-            self.output_2.setText('0')
+        #change function
+        screen = self.output.text()
+        if self.output_2.text() == "":
+            if self.output.text() == "0":
+                self.output.setText(f'{self.output.text()}{pressed}')
+                self.output_2.setText('')
+            else:
+                #when type function without number first 
+                screen = screen[:-1]
+                print(screen)
+                self.output.setText(f'{screen}{pressed}')
         else:
-            self.output.setText(f'{self.output.text()}{self.output_2.text()}{pressed}')
-            self.output_2.setText('0')
+            #number goes to output1 then output2 becomes 0, waiting for more inputs
+            if self.output.text() == "0":
+                self.output.setText(f'{self.output_2.text()}{pressed}')
+                self.output_2.setText('')
+            else:
+                self.output.setText(f'{self.output.text()}{self.output_2.text()}{pressed}')
+                self.output_2.setText('')
 
     def math(self):
         #prevent stupid people from pressing number then equal without any + - * /
@@ -288,7 +300,7 @@ class Ui_Calculator(object):
 
     def wtfisce(self):
         #reset only the output2 value
-        self.output_2.setText("0")
+        self.output_2.setText("")
 
     def retranslateUi(self, Calculator):
         _translate = QtCore.QCoreApplication.translate
@@ -312,7 +324,7 @@ class Ui_Calculator(object):
         self.pushButtonsub.setText(_translate("Calculator", "-"))
         self.pushButtonadd.setText(_translate("Calculator", "+"))
         self.pushButtonc.setText(_translate("Calculator", "C"))
-        self.output_2.setText(_translate("Calculator", "0"))
+        self.output_2.setText(_translate("Calculator", ""))
 
 
 if __name__ == "__main__":
