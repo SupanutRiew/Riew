@@ -259,6 +259,13 @@ class Ui_Calculator(object):
                 self.output_2.setText('')
 
     def math(self):
+        #this fix bugs where user input function but no last number
+        temporary = self.output.text()
+        if self.output_2.text() == "":
+            if temporary[-1] == "+" or temporary[-1] == "-":
+                self.output_2.setText("0")
+            elif temporary[-1] == "*" or temporary[-1] == "/":
+                self.output_2.setText("1")
         #prevent stupid people from pressing number then equal without any + - * /
         if self.output.text() == "0":
             screen = self.output_2.text()
